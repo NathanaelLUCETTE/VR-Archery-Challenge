@@ -10,13 +10,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Arrow
+  - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Interactable Ignore Ray
+  - Body
+  - Arrow
   - 
   - 
   - 

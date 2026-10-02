@@ -41,7 +41,7 @@ public class PullInteraction : XRBaseInteractable
     }
 
     public override void ProcessInteractable(
-        XRInteractionUpdateOrder.UpdatePhase updatePhase)
+    XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
         base.ProcessInteractable(updatePhase);
 
@@ -53,6 +53,7 @@ public class PullInteraction : XRBaseInteractable
                 pullAmount = CalculatePull(pullPosition);
 
                 UpdateString();
+                HapticFeedback();
             }
         }
     }
@@ -87,5 +88,19 @@ public class PullInteraction : XRBaseInteractable
         );
 
         _lineRenderer.SetPosition(1, linePosition);
+    }
+    private void HapticFeedback()
+    {
+        if (pullingInteractor != null)
+        {
+            ActionBasedController currentController =
+                pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
+
+            Debug.Log(
+                pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>()
+            );
+
+            currentController.SendHapticImpulse(pullAmount, .1f);
+        }
     }
 }
