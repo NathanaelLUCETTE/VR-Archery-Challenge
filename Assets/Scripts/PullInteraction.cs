@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
@@ -16,6 +17,12 @@ public class PullInteraction : XRBaseInteractable
     private LineRenderer _lineRenderer;
     private IXRSelectInteractor pullingInteractor = null;
 
+    [SerializeField] private AudioSource releaseAudio;
+    [SerializeField] private AudioSource tensionAudio;
+
+    private float previousPullAmount;
+    private float tensionSoundUntil;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,15 +36,24 @@ public class PullInteraction : XRBaseInteractable
 
     public void Release()
     {
+        if (tensionAudio != null)
+            tensionAudio.Stop();
+
+        tensionSoundUntil = 0f;
+        previousPullAmount = 0f;
         PullActionReleased?.Invoke(pullAmount);
         pullingInteractor = null;
         pullAmount = 0f;
+
         notch.transform.localPosition = new Vector3(
             notch.transform.localPosition.x,
             notch.transform.localPosition.y,
             0f
         );
+        PlayReleaseSound();
         UpdateString();
+
+        
     }
 
     public override void ProcessInteractable(
@@ -91,16 +107,42 @@ public class PullInteraction : XRBaseInteractable
     }
     private void HapticFeedback()
     {
-        if (pullingInteractor != null)
+        if (pullingInteractor == null)
+            return;
+
+        // The player usually sits on the controller, a parent of the interactor
+        var hapticPlayer = pullingInteractor.transform.GetComponentInParent<HapticImpulsePlayer>();
+
+        if (hapticPlayer != null)
         {
-            ActionBasedController currentController =
-                pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
-
-            Debug.Log(
-                pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>()
-            );
-
-            currentController.SendHapticImpulse(pullAmount, .1f);
+            hapticPlayer.SendHapticImpulse(pullAmount, 0.1f);
         }
+    }
+    private void PlayReleaseSound()
+    {
+        releaseAudio.Stop();
+        releaseAudio.Play();
+    }
+    private void LateUpdate()
+    {
+        if (tensionAudio == null)
+            return;
+
+        // Joue lorsque la tension augmente.
+        bool pulling = isSelected &&
+                       pullAmount > previousPullAmount + 0.0005f;
+
+        previousPullAmount = pullAmount;
+
+        if (pulling)
+            tensionSoundUntil = Time.time + 0.1f;
+
+        // Le petit délai évite les coupures entre deux mouvements.
+        bool shouldPlay = isSelected && Time.time < tensionSoundUntil;
+
+        if (shouldPlay && !tensionAudio.isPlaying)
+            tensionAudio.Play();
+        else if (!shouldPlay && tensionAudio.isPlaying)
+            tensionAudio.Stop();
     }
 }

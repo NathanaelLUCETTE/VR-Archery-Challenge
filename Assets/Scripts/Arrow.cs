@@ -7,14 +7,21 @@ public class Arrow : MonoBehaviour
     public Transform tip;
 
     private Rigidbody _rigidbody;
+    //Polish
+    private ParticleSystem _particleSystem;
+    private TrailRenderer _trailRenderer;
     private bool _inAir = false;
     private Vector3 _lastPosition = Vector3.zero;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        PullInteraction.PullActionReleased += Release;
 
+        //Polish
+        _particleSystem = GetComponentInChildren<ParticleSystem>();
+        _trailRenderer = GetComponentInChildren<TrailRenderer>();
+
+        PullInteraction.PullActionReleased += Release;
         Stop();
     }
 
@@ -26,8 +33,10 @@ public class Arrow : MonoBehaviour
     private void Release(float value)
     {
         PullInteraction.PullActionReleased -= Release;
+
         gameObject.transform.parent = null;
         _inAir = true;
+
         SetPhysics(true);
 
         Vector3 force = transform.forward * value * speed;
@@ -36,6 +45,10 @@ public class Arrow : MonoBehaviour
         StartCoroutine(RotateWithVelocity());
 
         _lastPosition = tip.position;
+
+        //Polish
+        _particleSystem.Play();
+        _trailRenderer.emitting = true;
     }
 
     private IEnumerator RotateWithVelocity()
@@ -72,6 +85,10 @@ public class Arrow : MonoBehaviour
     {
         _inAir = false;
         SetPhysics(false);
+
+        //Polish
+        _particleSystem.Stop();
+        _trailRenderer.emitting = false;
     }
 
     private void SetPhysics(bool usePhysics)
