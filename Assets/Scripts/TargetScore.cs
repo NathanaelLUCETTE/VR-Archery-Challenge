@@ -39,7 +39,7 @@ public class TargetScore : MonoBehaviour
         }
 
         int points = GetPoints(worldImpact);
-        scoreManager.AddPoints(points*10); // Assuming each point is worth 10 poin
+        scoreManager.AddPoints(points);
         if (points == 0)
             Debug.Log("Impact hors du disque : 0 point.", this);
     }

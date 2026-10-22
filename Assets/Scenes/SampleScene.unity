@@ -1350,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1358,7 +1358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8661,7 +8661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9040400755245757577, guid: 64cd3e3d7c0a4eb4982eab7024a1ee9b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -2.85
       objectReference: {fileID: 0}
     - target: {fileID: 9040400755245757577, guid: 64cd3e3d7c0a4eb4982eab7024a1ee9b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8770,9 +8770,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a82beff6685fd84fb33ee11bdc0c70e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetScore
-  scoreCenter: {fileID: 0}
+  scoreCenter: {fileID: 827819777}
   radius: 0.61
-  scoreManager: {fileID: 0}
+  scoreManager: {fileID: 1056460608}
+--- !u!4 &827819777 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4865517407652932431, guid: 64cd3e3d7c0a4eb4982eab7024a1ee9b, type: 3}
+  m_PrefabInstance: {fileID: 827819771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &839423579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10945,7 +10950,7 @@ MonoBehaviour:
     targetScale: 1
     targetSpeed: 0.5
   hard:
-    duration: 5
+    duration: 60
     targetScale: 0.7
     targetSpeed: 0.9
   timerText: {fileID: 1158935645}
@@ -10956,7 +10961,7 @@ MonoBehaviour:
   gameplayPanel: {fileID: 927178028}
   resultsPanel: {fileID: 1152743958}
   resultsText: {fileID: 967677404}
-  levelGoals: 1e0000003c0000005a000000i
+  levelGoals: 1e0000003c0000005a00000078000000i
   targetVisibleDuration: 3
   targetHiddenDuration: 2
 --- !u!114 &1056460608
@@ -10971,7 +10976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fb86913a87211478c940f6e5779352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 706302759}
 --- !u!4 &1056460609
 Transform:
   m_ObjectHideFlags: 0

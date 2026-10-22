@@ -24,8 +24,8 @@ public class EquipmentMenuUI : MonoBehaviour
         _progression = progression;
         _menu = menu;
         Button reference = menu.GetComponentInChildren<Button>(true);
-        _panel = Rect("Niveaux et equipement", canvas.transform, 0, 9, 1100, 800);
-        _panel.localScale = Vector3.one * 0.02f;
+        _panel = Rect("Niveaux et equipement", canvas.transform, 0, 5, 1100, 800);
+        _panel.localScale = Vector3.one * 0.01f;
         MatchDepth(_panel, reference);
         _panel.gameObject.AddComponent<Image>().color = new Color(0.035f, 0.065f, 0.11f, 1f);
         Label(_panel, "NIVEAUX ET EQUIPEMENT", 0, 345, 1000, 60, 36);
@@ -45,10 +45,10 @@ public class EquipmentMenuUI : MonoBehaviour
         _summary = Label(_panel, "", 0, -250, 1000, 80, 23);
         Button(_panel, "Retour au menu", 0, -345, 420, 65, Close);
 
-        Button access = Button(menu.transform, "Niveaux / equipement", 10, 6.5f, 10, 1.5f, Open);
+        Button access = Button(menu.transform, "Niveaux / equipement", 5, 6.5f, 8, 1.5f, Open);
         access.GetComponentInChildren<TMP_Text>().fontSize = 0.5f;
         MatchDepth(access.transform, reference);
-        _menuSummary = Label(menu.transform, "", 0, 9, 20, 1.5f, 0.5f);
+        _menuSummary = Label(menu.transform, "", 0, 0.5f, 20, 1.5f, 0.5f);
         MatchDepth(_menuSummary.transform, reference);
         Refresh();
         Hide();
@@ -135,3 +135,5 @@ public class EquipmentMenuUI : MonoBehaviour
         return button;
     }
 }
+
+
