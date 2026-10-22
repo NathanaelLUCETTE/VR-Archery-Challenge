@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7491451571984319458
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.29128698
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0000042915344
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.143051
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0000000027939675
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000000032596286
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000014901159
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962716653563004447, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582464154056425090, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      propertyPath: m_Name
+      value: ArcheryTarget Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8582464154056425090, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 804035395136048482}
+    - targetCorrespondingSourceObject: {fileID: 8582464154056425090, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9033951975339209442}
+  m_SourcePrefab: {fileID: 100100000, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+--- !u!1 &1219897354680057184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8582464154056425090, guid: f6369cb5407c78e43bd4f609210f859b, type: 3}
+  m_PrefabInstance: {fileID: 7491451571984319458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &804035395136048482
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219897354680057184}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!114 &9033951975339209442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219897354680057184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fc03b2ca7ac3742a3f840be0d09992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MovingTarget
+  direction: {x: 1, y: 0, z: 0}
+  amplitude: 1
+  speed: 0.5
