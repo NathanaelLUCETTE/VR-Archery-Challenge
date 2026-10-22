@@ -1332,6 +1332,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92811379}
   m_CullTransparentMesh: 1
+--- !u!1001 &92954752
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3701202431252008202, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_Name
+      value: Bow Completed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960716320926682320, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008461865543561412, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f36810f37bf4b0540a371dff3ea3a188, type: 3}
 --- !u!1001 &96094642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2017,7 +2078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 3}
+  m_AnchoredPosition: {x: 6, y: 3}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &155252707
@@ -2732,7 +2793,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: StartTraining
         m_Mode: 1
@@ -6913,7 +6974,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: StartHard
         m_Mode: 1
@@ -10887,14 +10948,14 @@ MonoBehaviour:
     duration: 5
     targetScale: 0.7
     targetSpeed: 0.9
-  timerText: {fileID: 0}
-  statusText: {fileID: 0}
+  timerText: {fileID: 1158935645}
+  statusText: {fileID: 155252707}
   targets: []
   autoStart: 0
-  menuPanel: {fileID: 0}
-  gameplayPanel: {fileID: 0}
-  resultsPanel: {fileID: 0}
-  resultsText: {fileID: 0}
+  menuPanel: {fileID: 710555245}
+  gameplayPanel: {fileID: 927178028}
+  resultsPanel: {fileID: 1152743958}
+  resultsText: {fileID: 967677404}
   levelGoals: 1e0000003c0000005a000000i
   targetVisibleDuration: 3
   targetHiddenDuration: 2
@@ -13753,7 +13814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: StartNormal
         m_Mode: 1
@@ -14232,7 +14293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8806329115733545878, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.8410001
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8806329115733545878, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16833,7 +16894,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: ReturnToMenu
         m_Mode: 1
@@ -17229,7 +17290,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: Replay
         m_Mode: 1
@@ -19015,7 +19076,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: StartEasy
         m_Mode: 1
@@ -20582,7 +20643,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1056460607}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: ReturnToMenu
         m_Mode: 1
@@ -21811,6 +21872,7 @@ SceneRoots:
   - {fileID: 1373153106}
   - {fileID: 437864599}
   - {fileID: 1056460609}
+  - {fileID: 92954752}
   - {fileID: 827819771}
   - {fileID: 1703568386}
   - {fileID: 610590593}
