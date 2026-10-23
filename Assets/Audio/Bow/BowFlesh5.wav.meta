@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b1c26406c27a65449c83f954a77a224
+guid: dfad3e99ec3bd854db41d7ed5e8d7fb0
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,3 +20,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 163948
+  packageName: Bow and Hammer Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/Bow and Hammer Sound Effects/Bow/BowFlesh5.wav
+  uploadId: 355241

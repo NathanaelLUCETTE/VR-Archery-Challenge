@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a92b5d95970979d4f8db7a0463086162
+guid: e2a4dc134d559e64ba37dc1339fd52f2
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,3 +20,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 163948
+  packageName: Bow and Hammer Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/Bow and Hammer Sound Effects/Bow/BowWater1.wav
+  uploadId: 355241

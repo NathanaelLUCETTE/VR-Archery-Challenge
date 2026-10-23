@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c0ea38986001e7a4484f68e74f7b54a3
+guid: bbf962a63a63c7b46a8e1d13be6b9177
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,3 +20,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 163948
+  packageName: Bow and Hammer Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/Bow and Hammer Sound Effects/Bow/BowFire3.wav
+  uploadId: 355241

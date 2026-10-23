@@ -3121,7 +3121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0b7210c204269c34aaf60d38073537e7, type: 3}
       propertyPath: m_Name
-      value: Stairs_Exterior_SidePlatform
+      value: PlankBow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

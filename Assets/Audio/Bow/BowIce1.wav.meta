@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f7ec16f70b4723245bf7313f3847d105
+guid: 0a1c8512ec0ce824fa0485eaaccf700f
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,3 +20,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 163948
+  packageName: Bow and Hammer Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/Bow and Hammer Sound Effects/Bow/BowIce1.wav
+  uploadId: 355241

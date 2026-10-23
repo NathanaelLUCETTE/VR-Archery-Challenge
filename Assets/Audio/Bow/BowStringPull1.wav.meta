@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d655e592f8922ff47b3bd3c44dc25be0
+guid: 699b912cc46ba4f4fad8fa38e997e232
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,3 +20,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 163948
+  packageName: Bow and Hammer Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/Bow and Hammer Sound Effects/Bow/BowStringPull1.wav
+  uploadId: 355241

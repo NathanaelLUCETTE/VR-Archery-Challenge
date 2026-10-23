@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a58a46d8387d71b43950ca43ac58fb6c
+guid: a31d3d19acf252a4989e16e695393b1e
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,3 +20,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 163948
+  packageName: Bow and Hammer Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/Bow and Hammer Sound Effects/Bow/Bow3.wav
+  uploadId: 355241
