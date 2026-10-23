@@ -78,7 +78,7 @@ public class LeaderboardUI : MonoBehaviour
         Button menuButton = MakeButton(menu.transform, "Classement", -5, 6.5f, 8, 1.5f, ShowLeaderboard);
         MatchDepth(menuButton.transform, menuReference);
         menuButton.GetComponentInChildren<TMP_Text>().fontSize = 0.5f;
-        Button resultButton = MakeButton(results.transform, "Enregistrer mon score", 10, 2f, 10, 1.5f, ShowKeyboard);
+        Button resultButton = MakeButton(results.transform, "Enregistrer mon score", 10, 10f, 10, 1.5f, ShowKeyboard);
         MatchDepth(resultButton.transform, resultsReference);
         resultButton.GetComponentInChildren<TMP_Text>().fontSize = 0.5f;
         _overlay.gameObject.SetActive(false);
@@ -241,6 +241,7 @@ public class LeaderboardUI : MonoBehaviour
         return button;
     }
 }
+
 
 
 

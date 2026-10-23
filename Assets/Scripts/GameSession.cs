@@ -86,6 +86,7 @@ public class GameSession : MonoBehaviour
             return;
 
         _initialized = true;
+        if (GetComponent<BackgroundMusic>() == null) gameObject.AddComponent<BackgroundMusic>();
         _scoreManager = GetComponent<ScoreManager>();
         _leaderboard = GetComponent<LeaderboardUI>();
         if (_leaderboard == null) _leaderboard = gameObject.AddComponent<LeaderboardUI>();
@@ -268,6 +269,7 @@ public class GameSession : MonoBehaviour
             timerText.text = $"Temps : {seconds / 60:00}:{seconds % 60:00}";
     }
 }
+
 
 
 
