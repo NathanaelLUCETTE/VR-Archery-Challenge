@@ -14,9 +14,11 @@ public class ScoreManager : MonoBehaviour
         ResetScore();
     }
 
+    public bool CanScore => _session == null || _session.CanScore;
+
     public void AddPoints(int points)
     {
-        if (points <= 0 || (_session != null && !_session.CanScore))
+        if (points <= 0 || !CanScore)
             return;
 
         TotalScore += points;

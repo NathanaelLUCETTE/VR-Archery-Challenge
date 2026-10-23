@@ -78,13 +78,41 @@ public class ProgressionManager : MonoBehaviour
             if (!arrow.HasBeenReleased) ApplyArrowAppearance(arrow);
     }
 
+    // Tier 0 keeps the original model; higher tiers swap to the curved bow / real arrow model
+    // with their own material (natural wood, carbon, glowing gold).
+    private static readonly string[] BowMaterials = { null, "Equipment/BowHunter", "Equipment/BowCarbon", "Equipment/BowElite" };
+    private static readonly string[] ArrowMaterials = { null, "Equipment/ArrowLight", "Equipment/ArrowCarbon", "Equipment/ArrowElite" };
+
     public void ApplyArrowAppearance(Arrow arrow)
     {
-        Tint(arrow.gameObject, Rules.Data.selectedArrow, false);
+        if (!SwapModel(arrow.transform, "Arrow", "Fleche Modele", Rules.Data.selectedArrow, ArrowMaterials))
+            Tint(arrow.gameObject, Rules.Data.selectedArrow, false);
     }
     public void ApplyBowAppearance(GameObject bow)
     {
-        Tint(bow, Rules.Data.selectedBow, true);
+        if (!SwapModel(bow.transform, "PlankBow", "Arc Modele", Rules.Data.selectedBow, BowMaterials))
+            Tint(bow, Rules.Data.selectedBow, true);
+    }
+
+    private static bool SwapModel(Transform root, string basicName, string modelName, int tier, string[] materials)
+    {
+        Transform basic = root.Find(basicName);
+        Transform model = root.Find(modelName);
+        if (basic == null || model == null) return false;
+        var basicRenderer = basic.GetComponent<MeshRenderer>();
+        var modelRenderer = model.GetComponent<MeshRenderer>();
+        if (basicRenderer == null || modelRenderer == null) return false;
+        bool upgraded = tier > 0;
+        // Only the renderers change: the original object also carries the grab/arrow colliders.
+        basicRenderer.enabled = !upgraded;
+        modelRenderer.enabled = upgraded;
+        if (upgraded && tier < materials.Length)
+        {
+            var material = Resources.Load<Material>(materials[tier]);
+            if (material != null) modelRenderer.sharedMaterial = material;
+        }
+        basicRenderer.SetPropertyBlock(null);
+        return true;
     }
     private static void Tint(GameObject root, int tier, bool skipArrows)
     {

@@ -41,8 +41,8 @@ public class LeaderboardUI : MonoBehaviour
         _repository = new ScoreRepository(Path.Combine(Application.persistentDataPath, "scores.json"), new UnityScoreSerializer());
 
         // Match the existing panel's local units, while using legible pixel-sized text internally.
-        _overlay = Rect("Classement et clavier VR", canvas.transform, 0f, 5f, 1000f, 760f);
-        _overlay.localScale = Vector3.one * 0.01f;
+        _overlay = Rect("Classement et clavier VR", canvas.transform, 0f, 5.6f, 1000f, 760f);
+        _overlay.localScale = Vector3.one * 0.017f;
         _overlay.gameObject.AddComponent<Image>().color = _background;
         _heading = Label(_overlay, "Titre", "CLASSEMENT", 0, 325, 920, 60, 36);
         _message = Label(_overlay, "Message", "", 0, -235, 920, 65, 24);
@@ -75,12 +75,12 @@ public class LeaderboardUI : MonoBehaviour
         // These controls use the same units as the user's existing menu buttons.
         Button menuReference = menu.GetComponentInChildren<Button>(true);
         Button resultsReference = results.GetComponentInChildren<Button>(true);
-        Button menuButton = MakeButton(menu.transform, "Classement", -5, 6.5f, 8, 1.5f, ShowLeaderboard);
+        Button menuButton = MakeButton(menu.transform, "Classement", 6.6f, 5.1f, 6f, 1.3f, ShowLeaderboard);
         MatchDepth(menuButton.transform, menuReference);
-        menuButton.GetComponentInChildren<TMP_Text>().fontSize = 0.5f;
-        Button resultButton = MakeButton(results.transform, "Enregistrer mon score", 10, 10f, 10, 1.5f, ShowKeyboard);
+        menuButton.GetComponentInChildren<TMP_Text>().fontSize = 0.55f;
+        Button resultButton = MakeButton(results.transform, "Enregistrer mon score", 0f, 2.6f, 10f, 1.3f, ShowKeyboard);
         MatchDepth(resultButton.transform, resultsReference);
-        resultButton.GetComponentInChildren<TMP_Text>().fontSize = 0.5f;
+        resultButton.GetComponentInChildren<TMP_Text>().fontSize = 0.55f;
         _overlay.gameObject.SetActive(false);
     }
 

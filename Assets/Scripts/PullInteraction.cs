@@ -15,6 +15,7 @@ public class PullInteraction : XRBaseInteractable
     public float pullAmount { get; private set; } = 0.0f;
 
     private LineRenderer _lineRenderer;
+    private XRGrabInteractable _bowGrab;
     private IXRSelectInteractor pullingInteractor = null;
 
     [SerializeField] private AudioSource releaseAudio;
@@ -33,14 +34,35 @@ public class PullInteraction : XRBaseInteractable
 
     public override bool IsHoverableBy(IXRHoverInteractor interactor)
     {
-        return base.IsHoverableBy(interactor) &&
+        return base.IsHoverableBy(interactor) && CanHandUseString(interactor) &&
             (ReferenceEquals(interactor, pullingInteractor) || IsHandNearString(interactor.transform));
     }
 
     public override bool IsSelectableBy(IXRSelectInteractor interactor)
     {
-        return base.IsSelectableBy(interactor) &&
+        return base.IsSelectableBy(interactor) && CanHandUseString(interactor) &&
             (interactorsSelecting.Contains(interactor) || IsHandNearString(interactor.transform));
+    }
+
+    // The string only works while the bow is held, and never by the hand holding the bow:
+    // its grip is close enough to the string to grab it by accident.
+    private bool CanHandUseString(IXRInteractor interactor)
+    {
+        if (_bowGrab == null) _bowGrab = GetComponentInParent<XRGrabInteractable>();
+        if (_bowGrab == null) return true;
+        if (!_bowGrab.isSelected) return false;
+        return !(interactor is IXRSelectInteractor select && _bowGrab.interactorsSelecting.Contains(select));
+    }
+
+    public bool HasArrowNocked
+    {
+        get
+        {
+            if (notch == null) return false;
+            foreach (Arrow arrow in notch.GetComponentsInChildren<Arrow>())
+                if (!arrow.HasBeenReleased) return true;
+            return false;
+        }
     }
 
     private bool IsHandNearString(Transform hand)
@@ -61,6 +83,8 @@ public class PullInteraction : XRBaseInteractable
 
         tensionSoundUntil = 0f;
         previousPullAmount = 0f;
+        // Only an actual shot makes the release sound: not a dry fire, nor a brush of the string.
+        bool shot = HasArrowNocked && pullAmount > 0.05f;
         PullActionReleased?.Invoke(pullAmount);
         pullingInteractor = null;
         pullAmount = 0f;
@@ -70,7 +94,8 @@ public class PullInteraction : XRBaseInteractable
             notch.transform.localPosition.y,
             0f
         );
-        PlayReleaseSound();
+        if (shot)
+            PlayReleaseSound();
         UpdateString();
 
         
@@ -141,6 +166,9 @@ public class PullInteraction : XRBaseInteractable
     }
     private void PlayReleaseSound()
     {
+        if (releaseAudio == null)
+            return;
+
         releaseAudio.Stop();
         releaseAudio.Play();
     }

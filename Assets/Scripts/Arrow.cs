@@ -16,6 +16,8 @@ public class Arrow : MonoBehaviour
     private bool _inAir = false;
     private Vector3 _lastPosition = Vector3.zero;
     public bool HasBeenReleased { get; private set; }
+    // Draw strength times equipment multiplier: 1 = full draw with standard gear.
+    public float LaunchPower { get; private set; }
 
     private void Awake()
     {
@@ -65,16 +67,17 @@ public class Arrow : MonoBehaviour
 
         var progression = FindAnyObjectByType<ProgressionManager>();
         float equipmentMultiplier = progression != null ? progression.ShotMultiplier : 1f;
+        LaunchPower = value * equipmentMultiplier;
         Vector3 force = transform.forward * value * speed * equipmentMultiplier;
         _rigidbody.AddForce(force, ForceMode.Impulse);
 
         StartCoroutine(RotateWithVelocity());
 
-        _lastPosition = tip.position;
+        _lastPosition = tip != null ? tip.position : transform.position;
 
         //Polish
-        _particleSystem.Play();
-        _trailRenderer.emitting = true;
+        if (_particleSystem != null) _particleSystem.Play();
+        if (_trailRenderer != null) _trailRenderer.emitting = true;
     }
 
     private IEnumerator RotateWithVelocity()
@@ -110,8 +113,12 @@ public class Arrow : MonoBehaviour
 
             // Stop clears _inAir before scoring, so later contacts cannot score again.
             var target = collision.collider.GetComponentInParent<TargetScore>();
+            Vector3 impact = collision.contactCount > 0 ? collision.GetContact(0).point : transform.position;
             if (target != null && collision.contactCount > 0)
-                target.RegisterHit(collision.GetContact(0).point);
+                target.RegisterHit(impact);
+            var hittable = collision.collider.GetComponentInParent<IArrowHittable>();
+            if (hittable != null)
+                hittable.OnArrowHit(this, impact, collision.collider);
         }
     }
 
@@ -121,8 +128,8 @@ public class Arrow : MonoBehaviour
         SetPhysics(false);
 
         //Polish
-        _particleSystem.Stop();
-        _trailRenderer.emitting = false;
+        if (_particleSystem != null) _particleSystem.Stop();
+        if (_trailRenderer != null) _trailRenderer.emitting = false;
     }
 
     private void SetPhysics(bool usePhysics)

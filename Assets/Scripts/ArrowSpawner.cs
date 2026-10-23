@@ -34,6 +34,9 @@ public class ArrowSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_bow == null)
+            return;
+
         if (!manualLoading && _bow.isSelected && _currentArrow == null && _spawnRoutine == null)
         {
             _spawnRoutine = StartCoroutine(DelayedSpawn());
@@ -54,7 +57,8 @@ public class ArrowSpawner : MonoBehaviour
     public bool TryLoad(ManualArrow candidate)
     {
         if (!manualLoading || _bow == null || !_bow.isSelected || _currentArrow != null || notch == null) return false;
-        if (Vector3.Distance(candidate.transform.position, notch.transform.position) > 0.25f) return false;
+        // Forgiving nocking: bringing the arrow near the string is enough.
+        if (Vector3.Distance(candidate.transform.position, notch.transform.position) > 0.4f) return false;
         _currentArrow = candidate.gameObject;
         var body = candidate.GetComponent<Rigidbody>();
         body.isKinematic = true;

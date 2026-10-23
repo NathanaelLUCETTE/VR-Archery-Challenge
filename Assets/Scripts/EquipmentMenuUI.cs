@@ -24,8 +24,9 @@ public class EquipmentMenuUI : MonoBehaviour
         _progression = progression;
         _menu = menu;
         Button reference = menu.GetComponentInChildren<Button>(true);
-        _panel = Rect("Niveaux et equipement", canvas.transform, 0, 5, 1100, 800);
-        _panel.localScale = Vector3.one * 0.01f;
+        _panel = Rect("Niveaux et equipement", canvas.transform, 0, 5.6f, 1100, 800);
+        // Same footprint and centre as the main menu panel (about 19 x 13.6 canvas units).
+        _panel.localScale = Vector3.one * 0.017f;
         MatchDepth(_panel, reference);
         _panel.gameObject.AddComponent<Image>().color = new Color(0.035f, 0.065f, 0.11f, 1f);
         Label(_panel, "NIVEAUX ET EQUIPEMENT", 0, 345, 1000, 60, 36);
@@ -45,10 +46,10 @@ public class EquipmentMenuUI : MonoBehaviour
         _summary = Label(_panel, "", 0, -250, 1000, 80, 23);
         Button(_panel, "Retour au menu", 0, -345, 420, 65, Close);
 
-        Button access = Button(menu.transform, "Niveaux / equipement", 5, 6.5f, 8, 1.5f, Open);
+        Button access = Button(menu.transform, "Niveaux / equipement", 0f, 5.1f, 6f, 1.3f, Open);
         access.GetComponentInChildren<TMP_Text>().fontSize = 0.5f;
         MatchDepth(access.transform, reference);
-        _menuSummary = Label(menu.transform, "", 0, 0.5f, 20, 1.5f, 0.5f);
+        _menuSummary = Label(menu.transform, "", 0, 2f, 20, 1.5f, 0.45f);
         MatchDepth(_menuSummary.transform, reference);
         Refresh();
         Hide();
@@ -64,7 +65,7 @@ public class EquipmentMenuUI : MonoBehaviour
             _levels[i].interactable = unlocked;
             string behavior = i == 0 ? "Cibles fixes" : i == 1 ? "Cibles mobiles" :
                 i == 2 ? "Apparitions" : "Mobiles + apparitions";
-            _levels[i].GetComponentInChildren<TMP_Text>().text = $"Niveau {i + 1} - {_session.GetLevelGoal(i + 1)} points\n{behavior}\n" +
+            _levels[i].GetComponentInChildren<TMP_Text>().text = $"Niveau {i + 1} - {_session.GetLevelGoal(i + 1, GameSession.Difficulty.Normal)} pts (Normal)\n{behavior}\n" +
                 (!unlocked ? $"Reussir le niveau {i}" : rules.Data.selectedLevel == i + 1 ? "CHOISI" : "Choisir");
             Describe(_bows[i], ProgressionRules.Bows[i], rules.IsUnlocked(ProgressionRules.Bows, i), rules.Data.selectedBow == i);
             Describe(_arrows[i], ProgressionRules.Arrows[i], rules.IsUnlocked(ProgressionRules.Arrows, i), rules.Data.selectedArrow == i);
@@ -72,7 +73,10 @@ public class EquipmentMenuUI : MonoBehaviour
         _summary.text = string.IsNullOrEmpty(_progression.SaveWarning)
             ? "Les choix s'appliquent au prochain tir.\nRetourne au menu pour choisir une difficulte ou t'entrainer."
             : _progression.SaveWarning;
-        _menuSummary.text = $"Niveau {rules.Data.selectedLevel} - Objectif : {_session.GetLevelGoal(rules.Data.selectedLevel)} points\n{_progression.EquipmentLabel}";
+        int level = rules.Data.selectedLevel;
+        _menuSummary.text = $"Niveau {level} - Objectif : Facile {_session.GetLevelGoal(level, GameSession.Difficulty.Facile)}" +
+            $" / Normal {_session.GetLevelGoal(level, GameSession.Difficulty.Normal)}" +
+            $" / Difficile {_session.GetLevelGoal(level, GameSession.Difficulty.Difficile)} pts\n{_progression.EquipmentLabel}";
     }
 
     private static void Describe(Button button, EquipmentSpec spec, bool unlocked, bool selected)

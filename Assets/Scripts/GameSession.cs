@@ -9,6 +9,7 @@ public class GameSession : MonoBehaviour
 {
     public enum Difficulty { Facile, Normal, Difficile }
     public enum SessionState { Menu, Playing, Training, Results }
+    public enum Mode { Classic, Hardcore, Extreme, Dragon }
 
     [Serializable]
     public class DifficultySettings
@@ -59,12 +60,26 @@ public class GameSession : MonoBehaviour
     private EquipmentMenuUI _equipmentMenu;
     private int _roundLevel = 1;
     private int _roundGoal;
+    private Mode _mode = Mode.Classic;
+    private SpecialModes _special;
+    private readonly List<GameObject> _targetRoots = new List<GameObject>();
 
-    public int GetLevelGoal(int level)
+    public Mode CurrentMode => _mode;
+
+    public int GetLevelGoal(int level) => GetLevelGoal(level, difficulty);
+
+    // Goals are tuned for Normal; scaling by duration keeps the same points-per-second pace,
+    // so Easy is not simply "more time for the same goal".
+    public int GetLevelGoal(int level, Difficulty forDifficulty)
     {
         int index = Mathf.Clamp(level, 1, ProgressionRules.LevelCount) - 1;
-        return levelGoals != null && index < levelGoals.Length ? Mathf.Max(1, levelGoals[index]) : 30 * (index + 1);
+        int baseGoal = levelGoals != null && index < levelGoals.Length ? Mathf.Max(1, levelGoals[index]) : 30 * (index + 1);
+        float ratio = GetSettings(forDifficulty).duration / Mathf.Max(1f, normal.duration);
+        return Mathf.Max(1, Mathf.RoundToInt(baseGoal * ratio));
     }
+
+    private DifficultySettings GetSettings(Difficulty forDifficulty) =>
+        forDifficulty == Difficulty.Facile ? easy : forDifficulty == Difficulty.Difficile ? hard : normal;
 
     // Checking the deadline here also rejects impacts before Update ends the round.
     public bool CanScore => isActiveAndEnabled && (State == SessionState.Training ||
@@ -121,8 +136,32 @@ public class GameSession : MonoBehaviour
             var visibility = visibilityRoot.GetComponent<TargetVisibility>();
             if (visibility == null) visibility = visibilityRoot.AddComponent<TargetVisibility>();
             if (!_targetVisibility.Contains(visibility)) _targetVisibility.Add(visibility);
+            if (!_targetRoots.Contains(visibilityRoot)) _targetRoots.Add(visibilityRoot);
         }
+
+        _special = GetComponent<SpecialModes>();
+        if (_special == null) _special = gameObject.AddComponent<SpecialModes>();
+        _special.Initialize(this, _scoreManager, targets.Length > 0 ? targets[0] : null);
+        var modeMenu = GetComponent<ModeMenuUI>();
+        if (modeMenu == null) modeMenu = gameObject.AddComponent<ModeMenuUI>();
+        modeMenu.Initialize(this, menuPanel, gameplayPanel);
     }
+
+    public void SetStatus(string text)
+    {
+        if (statusText != null) statusText.text = text;
+    }
+
+    // The classic range targets make way for the special modes' own targets.
+    private void SetClassicTargetsActive(bool active)
+    {
+        foreach (GameObject root in _targetRoots)
+            if (root != null && root.activeSelf != active) root.SetActive(active);
+    }
+
+    public void StartHardcore() => BeginSession(false, Mode.Hardcore);
+    public void StartExtreme() => BeginSession(false, Mode.Extreme);
+    public void StartDragon() => BeginSession(false, Mode.Dragon);
 
     public void StartEasy() { difficulty = Difficulty.Facile; BeginSession(false); }
     public void StartNormal() { difficulty = Difficulty.Normal; BeginSession(false); }
@@ -131,11 +170,16 @@ public class GameSession : MonoBehaviour
     public void Replay()
     {
         Initialize();
+        if (_mode != Mode.Classic)
+        {
+            BeginSession(false, _mode);
+            return;
+        }
         _progression.SelectLevel(_roundLevel);
         BeginSession(false);
     }
 
-    private void BeginSession(bool training)
+    private void BeginSession(bool training, Mode mode = Mode.Classic)
     {
         Initialize();
         _leaderboard.Hide();
@@ -143,12 +187,23 @@ public class GameSession : MonoBehaviour
         CompletedResult = null;
         State = SessionState.Menu;
         ClearFiredArrows();
-        DifficultySettings settings = difficulty == Difficulty.Facile ? easy
-            : difficulty == Difficulty.Difficile ? hard : normal;
+        _mode = training ? Mode.Classic : mode;
+        if (_mode != Mode.Classic)
+        {
+            BeginSpecialSession();
+            return;
+        }
+        _special.Stop();
+        SetClassicTargetsActive(true);
+        DifficultySettings settings = GetSettings(difficulty);
         _roundLevel = _progression.Rules.Data.selectedLevel;
         _roundGoal = GetLevelGoal(_roundLevel);
+        bool movingLevel = _roundLevel == 2 || _roundLevel == 4;
+        // In Difficile, targets also drift slowly on the "fixed" levels.
+        float speed = movingLevel ? settings.targetSpeed * 1.2f
+            : difficulty == Difficulty.Difficile ? settings.targetSpeed * 0.5f : 0f;
         ConfigureTargets(training ? 1f : Mathf.Max(0.1f, settings.targetScale) * Mathf.Pow(0.9f, _roundLevel - 1),
-            !training && (_roundLevel == 2 || _roundLevel == 4) ? settings.targetSpeed * 1.2f : 0f,
+            training ? 0f : speed,
             !training && (_roundLevel == 3 || _roundLevel == 4));
 
         _scoreManager.ResetScore();
@@ -167,9 +222,26 @@ public class GameSession : MonoBehaviour
         RefreshPanels();
     }
 
+    private void BeginSpecialSession()
+    {
+        SetClassicTargetsActive(false);
+        _roundGoal = _special.Goal(_mode);
+        _scoreManager.ResetScore();
+        _endTime = Time.time + _special.Duration(_mode);
+        State = SessionState.Playing;
+        _lastDisplayedSecond = -1;
+        SetStatus($"{SpecialModes.Title(_mode)}\n{_special.Rules(_mode)}");
+        _special.Begin(_mode);
+        RefreshTimer();
+        RefreshPanels();
+    }
+
     public void ReturnToMenu()
     {
         Initialize();
+        _special.Stop();
+        _mode = Mode.Classic;
+        SetClassicTargetsActive(true);
         _leaderboard.Hide();
         _equipmentMenu.Hide();
         _equipmentMenu.Refresh();
@@ -206,7 +278,10 @@ public class GameSession : MonoBehaviour
         // Leave the notched arrow alone so the bow can keep loading normally.
         foreach (Arrow arrow in FindObjectsByType<Arrow>())
         {
-            if (!arrow.HasBeenReleased) continue;
+            // Arrows taken from the quiver then dropped on the ground are cleared too.
+            var manual = arrow.GetComponent<ManualArrow>();
+            bool dropped = manual != null && manual.WasTaken && !manual.Loaded && !manual.IsHeld;
+            if (!arrow.HasBeenReleased && !dropped) continue;
             arrow.gameObject.SetActive(false);
             Destroy(arrow.gameObject);
         }
@@ -224,7 +299,7 @@ public class GameSession : MonoBehaviour
         if (State != SessionState.Playing)
             return;
 
-        if (Time.time >= _endTime)
+        if (Time.time >= _endTime || (_mode != Mode.Classic && _special.Finished))
             EndGame();
         else
             RefreshTimer();
@@ -232,6 +307,11 @@ public class GameSession : MonoBehaviour
 
     private void EndGame()
     {
+        if (_mode != Mode.Classic)
+        {
+            EndSpecialGame();
+            return;
+        }
         State = SessionState.Results;
         foreach (TargetVisibility visibility in _targetVisibility)
             if (visibility != null) visibility.Configure(false, targetVisibleDuration, targetHiddenDuration, 0f);
@@ -256,6 +336,28 @@ public class GameSession : MonoBehaviour
             resultsText.text = $"Niveau {_roundLevel} - {difficulty}\nScore final : {_scoreManager.TotalScore}\n{outcome}";
         RefreshPanels();
         Debug.Log($"Partie terminee ({difficulty}) : {_scoreManager.TotalScore} points.", this);
+    }
+
+    private void EndSpecialGame()
+    {
+        State = SessionState.Results;
+        int score = _scoreManager.TotalScore;
+        string title = SpecialModes.Title(_mode);
+        string outcome;
+        if (_mode == Mode.Dragon)
+            outcome = _special.DragonDefeated ? "VICTOIRE ! Le dragon est vaincu !"
+                : _special.PlayerDefeated ? "Tu as ete brule par le dragon... Reessaie !"
+                : "Le dragon s'est enfui. Sois plus rapide !";
+        else
+            outcome = score >= _roundGoal ? "Bravo, objectif atteint !" : $"Objectif non atteint : {_roundGoal} points requis. Reessaie !";
+        _special.Stop();
+        CompletedResult = new SavedScore { id = Guid.NewGuid().ToString(), score = score,
+            difficulty = title, playedAtUtc = DateTime.UtcNow.ToString("O") };
+        RefreshTimer();
+        SetStatus($"Partie terminee !\nScore final : {score}");
+        if (resultsText != null)
+            resultsText.text = $"Mode {title}\nScore final : {score}\n{outcome}";
+        RefreshPanels();
     }
 
     private void RefreshTimer()

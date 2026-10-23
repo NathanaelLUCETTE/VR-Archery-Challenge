@@ -33,16 +33,17 @@ public class VolumeMenuUI : MonoBehaviour
     {
         if (_initialized) return;
         _initialized = true;
-        CreateControls(menu);
-        CreateControls(gameplay);
+        CreateControls(menu, new Vector2(-5f, 3.5f));
+        // Bottom-right corner during play, away from the line of sight to the targets.
+        CreateControls(gameplay, new Vector2(6.5f, 0.3f));
         Refresh();
     }
 
-    private void CreateControls(GameObject menu)
+    private void CreateControls(GameObject menu, Vector2 anchor)
     {
         if (menu == null) return;
         Button reference = menu.GetComponentInChildren<Button>(true);
-        _row = Rect("Volume general", menu.transform, 0f, 8f, 10f, 1.2f);
+        _row = Rect("Volume general", menu.transform, anchor.x, anchor.y, 10f, 1.2f);
         if (reference != null)
         {
             Vector3 position = _row.localPosition;

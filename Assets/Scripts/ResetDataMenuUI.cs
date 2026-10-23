@@ -20,8 +20,8 @@ public class ResetDataMenuUI : MonoBehaviour
         rect.gameObject.layer = menu.layer;
         rect.SetParent(menu.transform, false);
         rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = new Vector2(0f, 10f);
-        rect.sizeDelta = new Vector2(10f, 1.5f);
+        rect.anchoredPosition = new Vector2(0f, 0.5f);
+        rect.sizeDelta = new Vector2(6f, 0.9f);
         if (reference != null)
         {
             Vector3 position = rect.localPosition;
@@ -44,7 +44,7 @@ public class ResetDataMenuUI : MonoBehaviour
         textRect.sizeDelta = Vector2.zero;
         _label = textRect.gameObject.AddComponent<TextMeshProUGUI>();
         _label.text = "Reinitialiser";
-        _label.fontSize = 0.45f;
+        _label.fontSize = 0.4f;
         _label.color = Color.white;
         _label.alignment = TextAlignmentOptions.Center;
         _label.raycastTarget = false;

@@ -1,0 +1,5 @@
+﻿Assets tiers (CC0 1.0 - domaine public, aucune attribution obligatoire)
+
+- Dragon.fbx : "Animated Monster Pack" par Quaternius - https://opengameart.org/content/lowpoly-animated-monsters
+- Eagle.fbx  : "Animal Pack Vol.2" par Quaternius - https://opengameart.org/content/animated-animales-low-poly
+- BossBattle.ogg : "Heavy Boss Battle 1" par MintoDog - https://opengameart.org/node/183631

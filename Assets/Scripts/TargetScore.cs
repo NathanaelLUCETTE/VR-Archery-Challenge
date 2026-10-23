@@ -28,6 +28,9 @@ public class TargetScore : MonoBehaviour
         return 0;
     }
 
+    // Raised for every counted hit, with the points scored (Hardcore targets despawn on it).
+    public event System.Action<TargetScore, int> Hit;
+
     public void RegisterHit(Vector3 worldImpact)
     {
         var visibility = GetComponentInParent<TargetVisibility>();
@@ -39,7 +42,13 @@ public class TargetScore : MonoBehaviour
         }
 
         int points = GetPoints(worldImpact);
+        // No popup in the menu or after the timer: those hits do not count.
+        bool counts = scoreManager.CanScore;
+        if (counts)
+            HitPopup.Spawn(worldImpact, points);
         scoreManager.AddPoints(points);
+        if (counts)
+            Hit?.Invoke(this, points);
         if (points == 0)
             Debug.Log("Impact hors du disque : 0 point.", this);
     }

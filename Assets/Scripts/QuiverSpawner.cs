@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
+// Runs after QuiverFollower so the waiting arrow never lags a frame behind the quiver.
+[DefaultExecutionOrder(100)]
 public class QuiverSpawner : MonoBehaviour
 {
     public GameObject arrowPrefab;
@@ -18,5 +20,13 @@ public class QuiverSpawner : MonoBehaviour
         var progression = FindAnyObjectByType<ProgressionManager>();
         if (progression != null) progression.ApplyArrowAppearance(instance.GetComponent<Arrow>());
         _nextSpawn = Time.time + 0.5f;
+    }
+
+    // The waiting arrow is not parented (the quiver is scaled); it is carried along instead,
+    // so it follows the player until a hand takes it.
+    private void LateUpdate()
+    {
+        if (_available == null || _available.WasTaken || _available.Loaded || spawnPoint == null) return;
+        _available.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
     }
 }
