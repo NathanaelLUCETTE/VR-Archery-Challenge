@@ -138,7 +138,7 @@ Si Unity est installé ailleurs, fournir son dossier `Editor/Data` avec le param
 
 ## Ressources et crédits
 
-- Tutoriel de base : [Fist Full of Shrimp — Unity VR Bow and Arrow,Part 1](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-1/).[Fist Full of Shrimp — Unity VR Bow and Arrow,Part 2](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-2/)[Fist Full of Shrimp — Unity VR Bow and Arrow,Part 3](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-3/)
+- Tutoriel de base : [Fist Full of Shrimp — Unity VR Bow and Arrow,Part 1](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-1/)/[Fist Full of Shrimp — Unity VR Bow and Arrow,Part 2](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-2/)/[Fist Full of Shrimp — Unity VR Bow and Arrow,Part 3](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-3/)
 - Modèles de l'arc et les flèches: **Fist-Full-Of-Shrimp — Bow-and-Arrow-Project-and-Assets**
 - Modèle du carquois : **Dimasjk Studio — Low Poly Style Bows & Quivers Part 1**.
 - Modèle des maisons : **Mikel Olaizola — Medieval_house_lite**
