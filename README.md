@@ -13,7 +13,7 @@ Jeu de tir à l’arc en réalité virtuelle réalisé avec Unity pour le Meta Q
 
 Le premier chargement peut être long. Les dossiers `Library`, `Temp` et `Logs` sont générés par Unity et ne sont pas nécessaires au transfert du projet.
 
-### Avec un Meta Quest 2
+### Avec un Meta Quest 2 ou 3
 
 Pour tester depuis l’éditeur sur PC, connecter le casque via Quest Link ou Air Link et établir la connexion VR avant de lancer Play. Le suivi du casque, les deux contrôleurs et les interactions doivent être vérifiés dans la scène.
 
@@ -141,8 +141,10 @@ Si Unity est installé ailleurs, fournir son dossier `Editor/Data` avec le param
 - Tutoriel de base : [Fist Full of Shrimp — Unity VR Bow and Arrow,Part 1](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-1/)/[Fist Full of Shrimp — Unity VR Bow and Arrow,Part 2](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-2/)/[Fist Full of Shrimp — Unity VR Bow and Arrow,Part 3](https://fistfullofshrimp.com/unity-vr-bow-and-arrow-part-3/)
 - Modèles de l'arc et les flèches: **Fist-Full-Of-Shrimp — Bow-and-Arrow-Project-and-Assets**
 - Modèle du carquois : **Dimasjk Studio — Low Poly Style Bows & Quivers Part 1**.
-- Modèle des maisons : **Mikel Olaizola — Medieval_house_lite**
-- Son de l'arc : **MGWSoundDesign — Bow and Hammer Sound Effects**
+- Modèle des maisons : **Mikel Olaizola — Medieval_house_lite + ZNS3D  — MEDIEVAL 3D GAME PACK**
+- Son de l'arc : **MGWSoundDesign — Bow and Hammer Sound Effects+**
+- modèle de la cible: **Glowing Rifts — Archery Target**
+- modèle pour la nature: **BigRookGames — Stylized Hand Painted Nature Pack** 
 - Musique d’ambiance utilisée : **The Mountain  — Fantasy Ambient**.
 - Frameworks et outils : Unity, XR Interaction Toolkit, OpenXR et TextMesh Pro.
 
