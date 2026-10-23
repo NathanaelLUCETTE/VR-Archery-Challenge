@@ -5,6 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class ArrowSpawner : MonoBehaviour
 {
+    public bool manualLoading = true;
     public GameObject arrow;
     public GameObject notch;
 
@@ -33,7 +34,7 @@ public class ArrowSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_bow.isSelected && _currentArrow == null && _spawnRoutine == null)
+        if (!manualLoading && _bow.isSelected && _currentArrow == null && _spawnRoutine == null)
         {
             _spawnRoutine = StartCoroutine(DelayedSpawn());
         }
@@ -48,6 +49,20 @@ public class ArrowSpawner : MonoBehaviour
             Destroy(_currentArrow);
             _currentArrow = null;
         }
+    }
+
+    public bool TryLoad(ManualArrow candidate)
+    {
+        if (!manualLoading || _bow == null || !_bow.isSelected || _currentArrow != null || notch == null) return false;
+        if (Vector3.Distance(candidate.transform.position, notch.transform.position) > 0.25f) return false;
+        _currentArrow = candidate.gameObject;
+        var body = candidate.GetComponent<Rigidbody>();
+        body.isKinematic = true;
+        body.useGravity = false;
+        candidate.transform.SetParent(notch.transform, false);
+        candidate.transform.localPosition = Vector3.zero;
+        candidate.transform.localRotation = Quaternion.identity;
+        return true;
     }
 
     private void NotchEmpty(float value)
@@ -69,3 +84,4 @@ public class ArrowSpawner : MonoBehaviour
         }
     }
 }
+

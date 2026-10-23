@@ -29,6 +29,26 @@ public class PullInteraction : XRBaseInteractable
         _lineRenderer = GetComponent<LineRenderer>();
     }
 
+    [SerializeField, Min(0.01f)] private float stringGrabDistance = 0.25f;
+
+    public override bool IsHoverableBy(IXRHoverInteractor interactor)
+    {
+        return base.IsHoverableBy(interactor) &&
+            (ReferenceEquals(interactor, pullingInteractor) || IsHandNearString(interactor.transform));
+    }
+
+    public override bool IsSelectableBy(IXRSelectInteractor interactor)
+    {
+        return base.IsSelectableBy(interactor) &&
+            (interactorsSelecting.Contains(interactor) || IsHandNearString(interactor.transform));
+    }
+
+    private bool IsHandNearString(Transform hand)
+    {
+        Vector3 center = start != null ? start.position : transform.position;
+        return (hand.position - center).sqrMagnitude <= stringGrabDistance * stringGrabDistance;
+    }
+
     public void SetPullInteractor(SelectEnterEventArgs args)
     {
         pullingInteractor = args.interactorObject;
@@ -63,7 +83,7 @@ public class PullInteraction : XRBaseInteractable
 
         if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
         {
-            if (isSelected)
+            if (isSelected && pullingInteractor != null)
             {
                 Vector3 pullPosition = pullingInteractor.transform.position;
                 pullAmount = CalculatePull(pullPosition);
@@ -80,6 +100,7 @@ public class PullInteraction : XRBaseInteractable
         Vector3 targetDirection = end.position - start.position;
         float maxLength = targetDirection.magnitude;
 
+        if (maxLength < 0.0001f) return 0f;
         targetDirection.Normalize();
         float pullValue =
             Vector3.Dot(pullDirection, targetDirection) / maxLength;
@@ -146,3 +167,4 @@ public class PullInteraction : XRBaseInteractable
             tensionAudio.Stop();
     }
 }
+

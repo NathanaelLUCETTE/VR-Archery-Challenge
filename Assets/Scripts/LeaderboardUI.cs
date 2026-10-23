@@ -84,6 +84,18 @@ public class LeaderboardUI : MonoBehaviour
         _overlay.gameObject.SetActive(false);
     }
 
+    public void ResetSavedScores()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "scores.json");
+        // Only the game's ranking and its own recovery files are removed.
+        foreach (string suffix in new[] { "", ".bak", ".tmp" })
+            if (File.Exists(path + suffix)) File.Delete(path + suffix);
+        _name = "";
+        _savedRound = null;
+        if (_nameText != null) _nameText.text = "Ton nom : _";
+        if (_ranking != null) _ranking.text = "Aucun score enregistre pour le moment.";
+    }
+
     public void Hide()
     {
         if (_overlay != null) _overlay.gameObject.SetActive(false);
@@ -229,5 +241,6 @@ public class LeaderboardUI : MonoBehaviour
         return button;
     }
 }
+
 
 

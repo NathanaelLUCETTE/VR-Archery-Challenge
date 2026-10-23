@@ -44,6 +44,16 @@ public class ProgressionManager : MonoBehaviour
         return won;
     }
 
+    public void ResetSavedProgression()
+    {
+        PlayerPrefs.DeleteKey(SaveKey);
+        PlayerPrefs.Save();
+        _rules = new ProgressionRules(null);
+        _invalidSave = false;
+        SaveWarning = "";
+        RefreshVisuals();
+    }
+
     private void Save()
     {
         if (_invalidSave) return;
@@ -101,3 +111,4 @@ public class ProgressionManager : MonoBehaviour
         }
     }
 }
+

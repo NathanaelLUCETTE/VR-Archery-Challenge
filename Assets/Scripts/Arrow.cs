@@ -40,6 +40,10 @@ public class Arrow : MonoBehaviour
 
     private void Release(float value)
     {
+        var manual = GetComponent<ManualArrow>();
+        if (manual != null && !manual.Loaded) return;
+        var owningBow = GetComponentInParent<ArrowSpawner>();
+        if (owningBow != null) _bowColliders = owningBow.GetComponentsInChildren<Collider>(true);
         HasBeenReleased = true;
         PullInteraction.PullActionReleased -= Release;
 
@@ -137,3 +141,4 @@ public class Arrow : MonoBehaviour
             arrowCollider.enabled = usePhysics;
     }
 }
+

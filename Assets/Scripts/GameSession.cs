@@ -97,6 +97,12 @@ public class GameSession : MonoBehaviour
         _equipmentMenu = GetComponent<EquipmentMenuUI>();
         if (_equipmentMenu == null) _equipmentMenu = gameObject.AddComponent<EquipmentMenuUI>();
         _equipmentMenu.Initialize(this, _progression, menuPanel);
+        var volumeMenu = GetComponent<VolumeMenuUI>();
+        if (volumeMenu == null) volumeMenu = gameObject.AddComponent<VolumeMenuUI>();
+        volumeMenu.Initialize(menuPanel, gameplayPanel);
+        var resetMenu = GetComponent<ResetDataMenuUI>();
+        if (resetMenu == null) resetMenu = gameObject.AddComponent<ResetDataMenuUI>();
+        resetMenu.Initialize(this, menuPanel);
 
         if (targets == null || targets.Length == 0)
             targets = FindObjectsByType<TargetScore>();
@@ -262,3 +268,6 @@ public class GameSession : MonoBehaviour
             timerText.text = $"Temps : {seconds / 60:00}:{seconds % 60:00}";
     }
 }
+
+
+
